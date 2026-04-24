@@ -1104,18 +1104,6 @@ footer {
     });
   </script>
 
-  <?php
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-    header('Content-Type: application/json');
-    $name = trim($_POST['name'] ?? ''); $email = trim($_POST['email'] ?? ''); $phone = trim($_POST['phone'] ?? ''); $message = trim($_POST['message'] ?? '');
-    if(empty($name) || empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($message)) { echo json_encode(['success'=>false,'message'=>'Please fill all required fields.']); exit; }
-    $to = "contact@gn3ng.com"; $subject = "GN3NG Inquiry - $name";
-    $body = "Name: $name\nEmail: $email\nPhone: $phone\n\nMessage:\n$message";
-    $headers = "From: $email\r\nReply-To: $email\r\n";
-    $sent = mail($to, $subject, $body, $headers);
-    echo json_encode(['success'=>$sent, 'message'=>$sent ? 'Thank you! We\'ll respond within 24 hours.' : 'Email error. Please call us.']);
-    exit;
-  }
-  ?>
+
 </body>
 </html>
